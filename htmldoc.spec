@@ -34,9 +34,6 @@ PDF ze spisem tre¶ci.
 %build
 %{__aclocal}
 %{__autoconf}
-if [ -f %{_pkgconfigdir}/libpng12.pc ] ; then
-        CPPFLAGS="`pkg-config libpng12 --cflags`";
-fi
 %configure CXXFLAGS="$CPPFLAGS"
 %{__make}
 
