@@ -6,6 +6,7 @@ Release:	1
 License:	GPL
 Group:		Applications/Publishing
 Source0:	ftp://ftp.easysw.com/pub/%{name}/%{version}/%{name}-%{version}-source.tar.bz2
+# Source0-md5:	a2ec0d880fa47a367f20fd957ec78c9b
 URL:		http://www.easysw.com/htmldoc/
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
