@@ -34,7 +34,7 @@ PDF ze spisem tre¶ci.
 %build
 %{__aclocal}
 %{__autoconf}
-%configure CXXFLAGS="$CPPFLAGS"
+%configure
 %{__make}
 
 %install
