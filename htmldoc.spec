@@ -1,8 +1,8 @@
 Summary:	HTML processing program
 Summary(pl):	Program przetwarzaj±cy HTML
 Name:		htmldoc
-Version:	1.8.19
-Release:	2
+Version:	1.8.22
+Release:	1
 License:	GPL
 Group:		Applications/Publishing
 Source0:	ftp://ftp.easysw.com/pub/%{name}/%{version}/%{name}-%{version}-source.tar.bz2
