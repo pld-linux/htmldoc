@@ -1,12 +1,12 @@
 Summary:	HTML processing program
 Summary(pl):	Program przetwarzaj±cy HTML
 Name:		htmldoc
-Version:	1.8.22
+Version:	1.8.23
 Release:	1
 License:	GPL
 Group:		Applications/Publishing
 Source0:	ftp://ftp.easysw.com/pub/%{name}/%{version}/%{name}-%{version}-source.tar.bz2
-# Source0-md5:	a2ec0d880fa47a367f20fd957ec78c9b
+# Source0-md5:	f867be6e4bdebf84ca6d58b16e4b839c
 URL:		http://www.easysw.com/htmldoc/
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
