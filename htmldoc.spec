@@ -9,6 +9,7 @@ Source0:	ftp://ftp.easysw.com/pub/%{name}/%{version}/%{name}-%{version}-source.t
 URL:		http://www.easysw.com/htmldoc/
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	fltk-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
@@ -31,7 +32,7 @@ PDF ze spisem tre¶ci.
 %setup -q
 
 %build
-aclocal
+%{__aclocal}
 %{__autoconf}
 if [ -f %{_pkgconfigdir}/libpng12.pc ] ; then
         CPPFLAGS="`pkg-config libpng12 --cflags`";
