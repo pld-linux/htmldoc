@@ -5,8 +5,6 @@ Version:	1.8.14
 Release:	1
 License:	GPL
 Group:		Applications/Publishing
-Group(de):	Applikationen/Publizieren
-Group(pl):	Aplikacje/Publikowanie
 Source0:	ftp://ftp.easysw.com/pub/%{name}/1.8.14/%{name}-%{version}-source.tar.bz2
 URL:		http://www.easysw.com/htmldoc/
 BuildRequires:	autoconf
