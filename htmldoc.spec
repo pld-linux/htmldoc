@@ -1,17 +1,26 @@
 Summary:	HTML processing program
 Summary(pl):	Program przetwarzaj±cy HTML
 Name:		htmldoc
-Version:	1.8.14
+Version:	1.8.19
 Release:	1
 License:	GPL
 Group:		Applications/Publishing
-Source0:	ftp://ftp.easysw.com/pub/%{name}/1.8.14/%{name}-%{version}-source.tar.bz2
+Source0:	ftp://ftp.easysw.com/pub/%{name}/%{version}/%{name}-%{version}-source.tar.bz2
 URL:		http://www.easysw.com/htmldoc/
+BuildRequires:	OpenGL-devel
+BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
-BuildRequires:	libpng-devel
+BuildRequires:	fltk-devel
 BuildRequires:	libjpeg-devel
+BuildRequires:	libpng-devel
 BuildRequires:	openssl-devel
+BuildRequires:	zlib-devel
+Requires:	OpenGL
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_prefix		/usr/X11R6
+%define		_mandir		%{_prefix}/man
+%define         _noautoreqdep   libGL.so.1 libGLU.so.1
 
 %description
 HTML processing program that generates HTML, PostScript, and PDF files
@@ -25,8 +34,12 @@ PDF ze spisem tre¶ci.
 %setup -q
 
 %build
+aclocal
 autoconf
-%configure
+if [ -f %{_pkgconfigdir}/libpng12.pc ] ; then
+        CPPFLAGS="`pkg-config libpng12 --cflags`";
+fi
+%configure CXXFLAGS="$CPPFLAGS"
 %{__make}
 
 %install
