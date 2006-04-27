@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	gui	# without FLTK-based GUI
+#
 Summary:	HTML processing program
 Summary(pl):	Program przetwarzaj±cy HTML
 Name:		htmldoc
@@ -5,19 +9,19 @@ Version:	1.8.23
 Release:	1
 License:	GPL
 Group:		Applications/Publishing
-Source0:	ftp://ftp.easysw.com/pub/%{name}/%{version}/%{name}-%{version}-source.tar.bz2
+Source0:	ftp://ftp.easysw.com/pub/htmldoc/%{version}/%{name}-%{version}-source.tar.bz2
 # Source0-md5:	f867be6e4bdebf84ca6d58b16e4b839c
+Patch0:		%{name}-link.patch
 URL:		http://www.easysw.com/htmldoc/
-BuildRequires:	XFree86-devel
+%{?with_gui:BuildRequires:	XFree86-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	fltk-devel
+%{?with_gui:BuildRequires:	fltk-devel}
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
 
 %description
 HTML processing program that generates HTML, PostScript, and PDF files
@@ -29,11 +33,13 @@ PDF ze spisem tre¶ci.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__aclocal}
 %{__autoconf}
-%configure
+%configure \
+	%{!?with_gui:--without-gui}
 %{__make}
 
 %install
