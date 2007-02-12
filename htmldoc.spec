@@ -3,7 +3,7 @@
 %bcond_without	gui	# without FLTK-based GUI
 #
 Summary:	HTML processing program
-Summary(pl):	Program przetwarzaj±cy HTML
+Summary(pl.UTF-8):   Program przetwarzajÄ…cy HTML
 Name:		htmldoc
 Version:	1.8.23
 Release:	1
@@ -27,9 +27,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 HTML processing program that generates HTML, PostScript, and PDF files
 with a table of contents.
 
-%description -l pl
-Program przetwarzaj±cy HTML, który generuje pliki HTML, PostScript i
-PDF ze spisem tre¶ci.
+%description -l pl.UTF-8
+Program przetwarzajÄ…cy HTML, ktÃ³ry generuje pliki HTML, PostScript i
+PDF ze spisem treÅ›ci.
 
 %prep
 %setup -q
