@@ -3,7 +3,7 @@
 %bcond_without	gui	# without FLTK-based GUI
 #
 Summary:	HTML processing program
-Summary(pl.UTF-8):   Program przetwarzający HTML
+Summary(pl.UTF-8):	Program przetwarzający HTML
 Name:		htmldoc
 Version:	1.8.23
 Release:	1
