@@ -5,15 +5,14 @@
 Summary:	HTML processing program
 Summary(pl.UTF-8):	Program przetwarzający HTML
 Name:		htmldoc
-Version:	1.8.23
+Version:	1.8.27
 Release:	1
 License:	GPL
 Group:		Applications/Publishing
 Source0:	ftp://ftp.easysw.com/pub/htmldoc/%{version}/%{name}-%{version}-source.tar.bz2
-# Source0-md5:	f867be6e4bdebf84ca6d58b16e4b839c
-Patch0:		%{name}-link.patch
-URL:		http://www.easysw.com/htmldoc/
-%{?with_gui:BuildRequires:	XFree86-devel}
+# Source0-md5:	35589e7b8fe9c54e11be87cd5aec4dcc
+URL:		http://www.htmldoc.org/
+%{?with_gui:BuildRequires:	xorg-lib-libXpm-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
 %{?with_gui:BuildRequires:	fltk-devel}
@@ -33,11 +32,8 @@ PDF ze spisem treści.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-%{__aclocal}
-%{__autoconf}
 %configure \
 	%{!?with_gui:--without-gui}
 %{__make}
@@ -54,7 +50,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGES.txt README.txt doc/htmldoc.html doc/htmldoc.png doc/htmldoc-fig*.png
+%doc COPYING.txt CHANGES.txt README.txt
+%doc doc/htmldoc.html doc/htmldoc-fig*.png doc/htmldoc.p* doc/help.html
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man1/*
 %{_datadir}/htmldoc
