@@ -7,7 +7,7 @@ Summary(pl.UTF-8):	Program przetwarzający HTML
 Name:		htmldoc
 Version:	1.8.27
 Release:	1
-License:	GPL
+License:	GPL v2 with OpenSSL exception
 Group:		Applications/Publishing
 Source0:	ftp://ftp.easysw.com/pub/htmldoc/%{version}/%{name}-%{version}-source.tar.bz2
 # Source0-md5:	35589e7b8fe9c54e11be87cd5aec4dcc
