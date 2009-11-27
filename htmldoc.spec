@@ -3,8 +3,8 @@
 %bcond_without	gui	# without FLTK-based GUI
 #
 %define		snap	r1629
-Summary:	HTML processing program
-Summary(pl.UTF-8):	Program przetwarzający HTML
+Summary:	Convert html source files into html, postscript, or pdf
+Summary(pl.UTF-8):	Konwertuj pliki html do ps, pdf lub html
 Name:		htmldoc
 Version:	1.9
 Release:	0.1.%{snap}
