@@ -7,7 +7,7 @@ Summary:	Convert html source files into html, postscript, or pdf
 Summary(pl.UTF-8):	Konwertuj pliki html do ps, pdf lub html
 Name:		htmldoc
 Version:	1.9
-Release:	0.1.%{snap}
+Release:	0.2.%{snap}
 License:	GPL v2 with OpenSSL exception
 Group:		Applications/Publishing
 Source0:	ftp://ftp.easysw.com/pub/htmldoc/snapshots/%{name}-%{version}.x-%{snap}.tar.bz2
