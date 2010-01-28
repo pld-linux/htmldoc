@@ -2,16 +2,15 @@
 # Conditional build:
 %bcond_without	gui	# without FLTK-based GUI
 #
-%define		snap	r1629
-Summary:	Convert html source files into html, postscript, or pdf
-Summary(pl.UTF-8):	Konwertuj pliki html do ps, pdf lub html
+Summary:	HTML processing program
+Summary(pl.UTF-8):	Program przetwarzający HTML
 Name:		htmldoc
-Version:	1.9
-Release:	0.1.%{snap}
+Version:	1.8.27
+Release:	3
 License:	GPL v2 with OpenSSL exception
 Group:		Applications/Publishing
-Source0:	ftp://ftp.easysw.com/pub/htmldoc/snapshots/%{name}-%{version}.x-%{snap}.tar.bz2
-# Source0-md5:	a5982321cadbadaef9ec59c10733b9df
+Source0:	ftp://ftp.easysw.com/pub/htmldoc/%{version}/%{name}-%{version}-source.tar.bz2
+# Source0-md5:	35589e7b8fe9c54e11be87cd5aec4dcc
 URL:		http://www.htmldoc.org/
 %{?with_gui:BuildRequires:	xorg-lib-libXpm-devel}
 BuildRequires:	autoconf
@@ -32,7 +31,7 @@ Program przetwarzający HTML, który generuje pliki HTML, PostScript i
 PDF ze spisem treści.
 
 %prep
-%setup -q -n %{name}-%{version}%{?snap:.x-%{snap}}
+%setup -q
 
 %build
 %configure \
@@ -52,7 +51,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc COPYING.txt CHANGES.txt README.txt
-%doc doc/*.html doc/htmldoc-fig*.png doc/htmldoc.p*
+%doc doc/htmldoc.html doc/htmldoc-fig*.png doc/htmldoc.p* doc/help.html
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man1/*
 %{_datadir}/htmldoc
