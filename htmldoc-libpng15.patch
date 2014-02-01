@@ -1,20 +1,43 @@
-$OpenBSD: patch-htmldoc_image_cxx,v 1.1 2011/07/08 20:36:09 naddy Exp $
+From upstream 1.8 branch svn r1668
 
-Fix build with png-1.5.
+The previous libpng-1.5 conversion patch here caused corrupt PNG output
+on 64 bit. e.g. http://answerpot.com/showthread.php?3662601-PNG+Rendering+Problems
 
---- htmldoc/image.cxx.orig	Wed May 31 13:00:02 2006
-+++ htmldoc/image.cxx	Wed Jul  6 15:22:43 2011
-@@ -1472,6 +1472,9 @@ image_load_png(image_t *img,	/* I - Image pointer */
-   png_bytep	*rows;		/* PNG row pointers */
-   uchar		*inptr,		/* Input pixels */
- 		*outptr;	/* Output pixels */
-+  png_bytep trans_alpha;
-+  int num_trans;
-+  png_color_16p trans_color;
- 
- 
-  /*
-@@ -1499,7 +1502,7 @@ image_load_png(image_t *img,	/* I - Image pointer */
+The upstream version (below) works well.
+
+Index: htmldoc/image.cxx
+===================================================================
+--- htmldoc/image.cxx.orig
++++ htmldoc/image.cxx
+@@ -3,23 +3,11 @@
+  *
+  *   Image handling routines for HTMLDOC, a HTML document processing program.
+  *
+- *   Copyright 1997-2005 by Easy Software Products.
++ *   Copyright 2011 by Michael R Sweet.
++ *   Copyright 1997-2010 by Easy Software Products.  All rights reserved.
+  *
+- *   These coded instructions, statements, and computer programs are the
+- *   property of Easy Software Products and are protected by Federal
+- *   copyright law.  Distribution and use rights are outlined in the file
+- *   "COPYING.txt" which should have been included with this file.  If this
+- *   file is missing or damaged please contact Easy Software Products
+- *   at:
+- *
+- *       Attn: ESP Licensing Information
+- *       Easy Software Products
+- *       44141 Airport View Drive, Suite 204
+- *       Hollywood, Maryland 20636-3142 USA
+- *
+- *       Voice: (301) 373-9600
+- *       EMail: info@easysw.com
+- *         WWW: http://www.easysw.com
++ *   This program is free software.  Distribution and use rights are outlined in
++ *   the file "COPYING.txt".
+  *
+  * Contents:
+  *
+@@ -1499,7 +1487,7 @@ image_load_png(image_t *img,	/* I - Imag
  
    rows = NULL;
  
@@ -23,7 +46,7 @@ Fix build with png-1.5.
    {
      progress_error(HD_ERROR_BAD_FORMAT, "PNG file contains errors!");
  
-@@ -1526,7 +1529,7 @@ image_load_png(image_t *img,	/* I - Image pointer */
+@@ -1526,7 +1514,7 @@ image_load_png(image_t *img,	/* I - Imag
  
    png_read_info(pp, info);
  
@@ -32,7 +55,7 @@ Fix build with png-1.5.
    {
      png_set_expand(pp);
  
-@@ -1535,15 +1538,15 @@ image_load_png(image_t *img,	/* I - Image pointer */
+@@ -1535,15 +1523,15 @@ image_load_png(image_t *img,	/* I - Imag
      if (Encryption)
        img->use ++;
    }
@@ -51,7 +74,7 @@ Fix build with png-1.5.
    {
      depth      = 3;
      img->depth = gray ? 1 : 3;
-@@ -1554,10 +1557,11 @@ image_load_png(image_t *img,	/* I - Image pointer */
+@@ -1554,10 +1542,10 @@ image_load_png(image_t *img,	/* I - Imag
      img->depth = 1;
    }
  
@@ -61,12 +84,11 @@ Fix build with png-1.5.
 +  img->height = png_get_image_height(pp, info);
  
 -  if ((info->color_type & PNG_COLOR_MASK_ALPHA) || info->num_trans)
-+  png_get_tRNS(pp, info, &trans_alpha, &num_trans, &trans_color);
-+  if ((png_get_color_type(pp, info) & PNG_COLOR_MASK_ALPHA) || num_trans)
++  if (png_get_color_type(pp, info) & PNG_COLOR_MASK_ALPHA)
    {
      if ((PSLevel == 0 && PDFVersion >= 14) || PSLevel == 3)
        image_need_mask(img, 8);
-@@ -1571,14 +1575,14 @@ image_load_png(image_t *img,	/* I - Image pointer */
+@@ -1571,14 +1559,14 @@ image_load_png(image_t *img,	/* I - Imag
  
  #ifdef DEBUG
    printf("color_type=0x%04x, depth=%d, img->width=%d, img->height=%d, img->depth=%d\n",
@@ -78,14 +100,14 @@ Fix build with png-1.5.
    else
      puts("    GRAYSCALE");
 -  if ((info->color_type & PNG_COLOR_MASK_ALPHA) || info->num_trans)
-+  if ((png_get_color_type(pp, info) & PNG_COLOR_MASK_ALPHA) || num_trans)
++  if (png_get_color_type(pp, info) & PNG_COLOR_MASK_ALPHA)
      puts("    ALPHA");
 -  if (info->color_type & PNG_COLOR_MASK_PALETTE)
 +  if (png_get_color_type(pp, info) & PNG_COLOR_MASK_PALETTE)
      puts("    PALETTE");
  #endif // DEBUG
  
-@@ -1594,9 +1598,9 @@ image_load_png(image_t *img,	/* I - Image pointer */
+@@ -1594,9 +1582,9 @@ image_load_png(image_t *img,	/* I - Imag
    * Allocate pointers...
    */
  
@@ -97,16 +119,16 @@ Fix build with png-1.5.
      rows[i] = img->pixels + i * img->width * depth;
  
   /*
-@@ -1610,7 +1614,7 @@ image_load_png(image_t *img,	/* I - Image pointer */
+@@ -1610,7 +1598,7 @@ image_load_png(image_t *img,	/* I - Imag
    * Generate the alpha mask as necessary...
    */
  
 -  if ((info->color_type & PNG_COLOR_MASK_ALPHA) || info->num_trans)
-+  if ((png_get_color_type(pp, info) & PNG_COLOR_MASK_ALPHA) || num_trans)
++  if (png_get_color_type(pp, info) & PNG_COLOR_MASK_ALPHA)
    {
  #ifdef DEBUG
      for (inptr = img->pixels, i = 0; i < img->height; i ++)
-@@ -1639,7 +1643,7 @@ image_load_png(image_t *img,	/* I - Image pointer */
+@@ -1639,7 +1627,7 @@ image_load_png(image_t *img,	/* I - Imag
    * Reformat the data as necessary for the reader...
    */
  
@@ -115,3 +137,12 @@ Fix build with png-1.5.
    {
     /*
      * Greyscale output needed...
+@@ -1720,7 +1708,7 @@ image_need_mask(image_t *img,	/* I - Ima
+   {
+     // Alpha mask
+     img->maskwidth = (img->width * scaling + 7) / 8;
+-    size           = img->maskwidth * img->height * scaling;
++    size           = img->maskwidth * img->height * scaling + 1;
+   }
+ 
+   img->mask = (uchar *)calloc(size, 1);
