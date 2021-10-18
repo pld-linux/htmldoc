@@ -1,0 +1,11 @@
+--- htmldoc-1.8.27/htmldoc/htmlsep.cxx~	2006-05-31 17:27:28.000000000 +0200
++++ htmldoc-1.8.27/htmldoc/htmlsep.cxx	2021-10-19 00:40:19.312028523 +0200
+@@ -536,7 +536,7 @@
+     if (t->markup >= MARKUP_H1 && t->markup < (MARKUP_H1 + TocLevels) &&
+         htmlGetVariable(t, (uchar *)"_HD_OMIT_TOC") == NULL)
+     {
+-      if (heading >= 0)
++      if (heading != 0)
+         write_footer(out, *heading);
+ 
+       (*heading) ++;
