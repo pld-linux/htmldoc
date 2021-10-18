@@ -14,7 +14,7 @@ Source0:	ftp://ftp.easysw.com/pub/htmldoc/%{version}/%{name}-%{version}-source.t
 Patch0:		%{name}-libpng15.patch
 Patch1:		htmldoc-1.8.27-fortify-fail.patch
 Patch2:		htmldoc-1.8.27-scanf-overflows.patch
-Patch3:		gcc11,patch
+Patch3:		gcc11.patch
 URL:		http://www.htmldoc.org/
 %{?with_gui:BuildRequires:	xorg-lib-libXpm-devel}
 BuildRequires:	autoconf
