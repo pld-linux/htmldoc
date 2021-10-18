@@ -6,7 +6,7 @@ Summary:	HTML processing program
 Summary(pl.UTF-8):	Program przetwarzający HTML
 Name:		htmldoc
 Version:	1.8.27
-Release:	14
+Release:	15
 License:	GPL v2 with OpenSSL exception
 Group:		Applications/Publishing
 Source0:	ftp://ftp.easysw.com/pub/htmldoc/%{version}/%{name}-%{version}-source.tar.bz2
@@ -14,6 +14,7 @@ Source0:	ftp://ftp.easysw.com/pub/htmldoc/%{version}/%{name}-%{version}-source.t
 Patch0:		%{name}-libpng15.patch
 Patch1:		htmldoc-1.8.27-fortify-fail.patch
 Patch2:		htmldoc-1.8.27-scanf-overflows.patch
+Patch3:		gcc11,patch
 URL:		http://www.htmldoc.org/
 %{?with_gui:BuildRequires:	xorg-lib-libXpm-devel}
 BuildRequires:	autoconf
@@ -38,6 +39,7 @@ PDF ze spisem treści.
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %configure \
